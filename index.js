@@ -42,6 +42,14 @@ async function run() {
         console.log(error);
       }
     });
+
+    app.get("/all-students-get", async (req, res) => {
+      try {
+        const query = {};
+        const result = await AllStudents.find(query).toArray();
+        res.send(result);
+      } catch (error) {}
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
