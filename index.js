@@ -41,7 +41,15 @@ async function run() {
 
     app.get("/all-students-get", async (req, res) => {
       try {
-        const query = {};
+        let query = {};
+        if (req.query.search) {
+          const searchTerm = req.query.search;
+          query = {
+            $or: [
+              { name: { $regex: searchTerm, $options: "i" } },
+            ],
+          };
+        }
         const result = await AllStudents.find(query).toArray();
         res.send(result);
       } catch (error) {}
